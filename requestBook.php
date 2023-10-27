@@ -7,11 +7,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $row = mysqli_fetch_assoc($result);
     echo !$row;
     if(!$row)
-        {$result = mysqli_query($conn,"SELECT * FROM `mbts`.`books` WHERE `Accession_no`=$BOOKID");
+        {
+            echo "hel";
+            $result = mysqli_query($conn,"SELECT * FROM `mbts`.`books` WHERE `Accession_no`=$BOOKID");
             $row = mysqli_fetch_assoc($result);
+            
             $BookTitle = $row['Title'];
             $ReciverPin = $_SESSION['username'];
-            // $transactionsStatus = $row['Transaction_Position'];
+            // $transactionsStatus = $row[' '];
             $transactionsID = 'testID001';
             $sql = "INSERT INTO `mbts`.`transactions` (
                            `Transaction_id`, 
@@ -27,9 +30,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                            '$transactionsID',
                            '$BOOKID','$BookTitle','$ReciverPin','not issued','not issued','waiting for admin to accept','incomplete')";
            $result = mysqli_query($conn,$sql);
+           echo mysqli_query($conn,$sql);
            if($result){
                header("Location: /student.php?tab=books");
-           }}
+           }
+    }
         
     if($row)
     header("Location: index.php");
